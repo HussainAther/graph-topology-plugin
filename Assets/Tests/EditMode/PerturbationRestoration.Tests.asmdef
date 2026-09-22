@@ -1,0 +1,13 @@
+{
+  "name": "PerturbationRestoration.Tests",
+  "rootNamespace": "PerturbationRestoration.Tests",
+  "references": [
+    "PerturbationRestoration"
+  ],
+  "optionalUnityReferences": [
+    "TestAssemblies"
+  ],
+  "includePlatforms": [
+    "Editor"
+  ]
+}

@@ -22,3 +22,37 @@ Recordings/
 *.VC.db
 
 .DS_Store
+
+# Unity generated
+[Ll]ibrary/
+[Tt]emp/
+[Oo]bj/
+[Bb]uild/
+[Bb]uilds/
+[Ll]ogs/
+UserSettings/
+MemoryCaptures/
+Recordings/
+
+# IDE/editor
+.vscode/
+.vs/
+.idea/
+*.csproj
+*.sln
+*.slnx
+*.user
+*.pidb
+*.booproj
+*.svd
+*.pdb
+*.mdb
+*.opendb
+*.VC.db
+
+# macOS
+.DS_Store
+
+# Local Unity/test logs
+unity-*.log
+test-results.xml
