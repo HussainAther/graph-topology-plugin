@@ -7,12 +7,16 @@ namespace PerturbationRestoration.Experiments
 {
     public class PerturbationExperiment
     {
-        public SimulationEngine Control { get; }
-        public SimulationEngine Perturbed { get; }
+        public SimulationEngine Control { get; private set; }
+        public SimulationEngine Perturbed { get; private set; }
 
-        public PerturbationMetrics Metrics { get; } = new();
+        public PerturbationMetrics Metrics { get; private set; }
 
         public int Timestep => Control.Timestep;
+
+        private readonly Graph _graph;
+        private readonly SimulationState _initialState;
+        private readonly INodeUpdateRule _updateRule;
 
         private bool _perturbationApplied;
 
@@ -22,26 +26,34 @@ namespace PerturbationRestoration.Experiments
             INodeUpdateRule updateRule
         )
         {
-            if (graph == null)
-                throw new ArgumentNullException(nameof(graph));
+            _graph = graph ?? throw new ArgumentNullException(nameof(graph));
 
-            if (initialState == null)
-                throw new ArgumentNullException(nameof(initialState));
+            _initialState = initialState?.Clone()
+                ?? throw new ArgumentNullException(nameof(initialState));
 
-            if (updateRule == null)
-                throw new ArgumentNullException(nameof(updateRule));
+            _updateRule = updateRule
+                ?? throw new ArgumentNullException(nameof(updateRule));
 
+            Reset();
+        }
+
+        public void Reset()
+        {
             Control = new SimulationEngine(
-                graph,
-                initialState,
-                updateRule
+                _graph,
+                _initialState,
+                _updateRule
             );
 
             Perturbed = new SimulationEngine(
-                graph,
-                initialState,
-                updateRule
+                _graph,
+                _initialState,
+                _updateRule
             );
+
+            Metrics = new PerturbationMetrics();
+
+            _perturbationApplied = false;
 
             UpdateMetrics();
         }
